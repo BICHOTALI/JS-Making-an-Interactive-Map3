@@ -5,19 +5,19 @@ const myMap = {
 	map: {},
 	markers: {},
 
-	// build leaflet map
+	// builds leaflet map 
 	buildMap() {
 		this.map = L.map('map', {
 		center: this.coordinates,
-		zoom: 11,
+		zoom: 10,
 		});
-		// add openstreetmap tiles
+		
 		L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 		attribution:
 			'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
 		minZoom: '15',
 		}).addTo(this.map)
-		// create and add geolocation marker
+		// creates and adds geolocation marker to current location
 		const marker = L.marker(this.coordinates)
 		marker
 		.addTo(this.map)
@@ -25,7 +25,7 @@ const myMap = {
 		.openPopup()
 	},
 
-	// add business markers
+	// adds business markers
 	addMarkers() {
 		for (var i = 0; i < this.businesses.length; i++) {
 		this.markers = L.marker([
@@ -38,7 +38,7 @@ const myMap = {
 	},
 }
 
-// get coordinates via geolocation api
+// gets coordinates via geolocation api
 async function getCoords(){
 	const pos = await new Promise((resolve, reject) => {
 		navigator.geolocation.getCurrentPosition(resolve, reject)
@@ -46,7 +46,7 @@ async function getCoords(){
 	return [pos.coords.latitude, pos.coords.longitude]
 }
 
-// get foursquare businesses
+// gets foursquare businesses based on location
 async function getFoursquare(business) {
 	const options = {
 		method: 'GET',
